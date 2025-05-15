@@ -1,5 +1,4 @@
 package ar.edu.ungs.prog2.ticketek;
-
-public class Teatro extends sede {
+public class Funcion {
 
 }
