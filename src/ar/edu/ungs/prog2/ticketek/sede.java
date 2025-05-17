@@ -6,10 +6,7 @@ public abstract class sede {
     public String getNombre() {
         return nombre;
     }
-    public sede(String nombre, String direccion, int capacidadMaxima, String Tiposede) {
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.capacidadMaxima = capacidadMaxima;
+    public sede(String nombre, String direccion, int capacidadMaxima) {
     }
     public String getDireccion() {
         return direccion;
