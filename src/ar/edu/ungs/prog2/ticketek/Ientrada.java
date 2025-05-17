@@ -5,7 +5,10 @@ public class IEntrada {/**
     * 
     * @return
     */
-   double precio();
+    public double precio(){
+        return 0.0;
+
+   }
 
    /**
     * Si la entrada es para estadio, la ubicacion será "CAMPO". 
@@ -15,10 +18,11 @@ public class IEntrada {/**
     *  - CAMPO
     *  - Platea Común f:3 a:31
     * @return
-    */
-   String ubicacion();
-
-   /**
+    */;
+   public String ubicacion(){
+    return null;
+   }
+/**
     * El toString de cada entrada debe respetar el siguiente formato:
     *  - "{COD ENTRADA} - {NOMBRE ESPECTACULO} - {FECHA} - {NOMBRE SEDE} - {UBICACION}"
     *  
@@ -31,7 +35,6 @@ public class IEntrada {/**
     *  - 7196 - Coldplay en vivo - 30/04/2025 P - La bombonera - CAMPO
     * @return
     */
-   String toString();
-
+   public String toString();
 
 }
