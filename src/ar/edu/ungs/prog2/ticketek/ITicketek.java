@@ -39,7 +39,7 @@ public class ITicketek {
       Listasede.add(sede);
     }
    }
-   public void registrarUsuario(String email, String nombre, String apellido, int contrasenia){
+   public void registrarUsuario(String email, String nombre, String apellido, String contrasenia){
         Usuario usuario = new Usuario(email, nombre, apellido, contrasenia);
     if (listaUsuarios.containsKey(usuario.getEmail())){
       throw new RuntimeException(" Emial Ya registrado");// agregar mas exception de tipo de datos;
@@ -48,13 +48,13 @@ public class ITicketek {
     listaUsuarios.put(email, usuario);
   }
 
-    }/* 
+    }
     public void registrarEspectaculo(String nombre){
-        if (Listaespectaculos.contains(nombre)) {// aca ver puede ser que tire error al compilar
+        Espectaculo espectaculo = new Espectaculo(nombre);
+        if (Listaespectaculos.contains(espectaculo.getNombre())) {// aca ver puede ser que tire error al compilar
         throw new RuntimeException("Espectaculo ya registrada"); 
         } 
         else{
-        Espectaculo espectaculo = new Espectaculo(nombre);
         Listaespectaculos.add(espectaculo);  
     }
     }
@@ -120,9 +120,4 @@ public class ITicketek {
         return 0;
         
     }
-        */
-   public void registrarUsuario(String email, String nombre, String apellido, String string) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'registrarUsuario'");
    }
-}

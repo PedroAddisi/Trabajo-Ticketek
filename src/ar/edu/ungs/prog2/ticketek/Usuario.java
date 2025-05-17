@@ -6,10 +6,10 @@ import java.util.ArrayList;
 public class Usuario {
     private String Nombre;
     private String Email;
-    private int Contraseña;
+    private String Contraseña;
     private String Apellido;
     private ArrayList <Entrada> Entradas;
-    public Usuario(String Email, String Nombre, String Apellido, int Contraseña) {
+    public Usuario(String Email, String Nombre, String Apellido, String Contraseña) {
         Email=this.Email;
         Nombre=this.Nombre;
         Apellido=this.Apellido;
@@ -54,10 +54,10 @@ public class Usuario {
     public void setEmail(String email) {
         Email = email;
     }
-    public int getContraseña() {
+    public String getContraseña() {
         return Contraseña;
     }
-    public void setContraseña(int contraseña) {
+    public void setContraseña(String contraseña) {
         Contraseña = contraseña;
     }
     public String getApellido() {
