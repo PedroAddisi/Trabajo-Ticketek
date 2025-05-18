@@ -108,19 +108,20 @@ public class ITicketek {
     }
     public  List<IEntrada> listarEntradasFuturas(String email, String contrasenia){
         if( listaUsuarios.get(email).getContraseña() == contrasenia){
-            listaUsuarios.get(email).imprimirentradas();//hacer funcion que imprima las entradas del usuario;
-                
+            if(){// condicion de fecha 
+            listaUsuarios.get(email).getEntradas();//hacer funcion que imprima las entradas del usuario;
+            } 
+            else{
+                throw new RuntimeException ("no tiene entradas futuras");
+            } 
             }
-        }
         else{
             throw new RuntimeException("Contraseña incorrecta");
         }
-
     }
-
     public List<IEntrada> listarTodasLasEntradasDelUsuario(String email, String contrasenia){
         if(listaUsuarios.get(email).getContraseña()==contrasenia){
-            return listaUsuarios.get(email).getEntradas();
+            return listaUsuarios.get(email).getEntradas();//misma funcion que arriba 
         }
         else{
             throw new RuntimeException("El usuario no tiene entradas compradas");
@@ -128,11 +129,9 @@ public class ITicketek {
     }
     public  boolean anularEntrada(IEntrada entrada, String contrasenia){
         return false;
-        
     }
     public IEntrada cambiarEntrada( IEntrada entrada, String contrasenia, String fecha, String sector, int asiento){
         return entrada;
-
     }
     public  IEntrada cambiarEntrada( IEntrada entrada, String contrasenia, String fecha){
         return entrada;
