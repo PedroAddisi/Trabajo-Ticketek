@@ -5,7 +5,6 @@ public class Funcion {
     private sede sede;
     private double precioBase;
     public Funcion(String nombreEspectaculo2, String fecha2, String sede2, double precioBase2) {
-        //TODO Auto-generated constructor stub
     }
     public String getNombreEspectaculo() {
         return nombreEspectaculo;

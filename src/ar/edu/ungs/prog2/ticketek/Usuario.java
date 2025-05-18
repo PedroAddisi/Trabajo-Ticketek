@@ -1,6 +1,4 @@
 package ar.edu.ungs.prog2.ticketek;
-
-import java.time.*;
 import java.util.ArrayList;
 
 public class Usuario {
@@ -8,37 +6,22 @@ public class Usuario {
     private String Email;
     private String Contraseña;
     private String Apellido;
-    private ArrayList <Entrada> Entradas;
+    private ArrayList <IEntrada> Entradas;
     public Usuario(String Email, String Nombre, String Apellido, String Contraseña) {
         Email=this.Email;
         Nombre=this.Nombre;
         Apellido=this.Apellido;
         Contraseña=this.Contraseña;
-
     }
     public void usuariocomproentrada(int numerodeasiento, int codigoespectaculo, String sede){
     }
-    public void verentradasproximas() throws Exception {
-        for (Entrada entrada : Entradas) {
-            LocalDate fechaactual  = LocalDate.now();
-            if (entrada.getFecha().isAfter(fechaactual)) {
-                System.out.print(entrada);
-            }
-            else{
-                throw new Exception("No se encontraron entradas posteirores a la fecha actual");    
-                   }     
+    public void verentradasproximas()  {
         }      
-    }
-    public void vertodaslaseEntradas() throws Exception{
-            if (Entradas.isEmpty()){
-                throw new Exception("No se encontraron entradas posteirores a la fecha actual");
-            } 
-            else{
-                 for (Entrada entrada : Entradas) {
-                    System.out.print(entrada);
-            }
+    public void vertodaslaseEntradas(){
+         }
+    public void agregarentrada(IEntrada entrada){
+        Entradas.add(entrada);    
          }    
-    }
     public void anularentradas(int codigodeentrada){
 
     }
@@ -66,10 +49,10 @@ public class Usuario {
     public void setApellido(String apellido) {
         Apellido = apellido;
     }
-    public ArrayList<Entrada> getEntradas() {
+    public ArrayList<IEntrada> getEntradas() {
         return Entradas;
     }
-    public void setEntradas(ArrayList<Entrada> entradas) {
+    public void setEntradas(ArrayList<IEntrada> entradas) {
         Entradas = entradas;
     }
 }

@@ -1,40 +1,75 @@
 package ar.edu.ungs.prog2.ticketek;
 
-public class IEntrada {/**
-    * 10) Calcula y devuelve el precio de la entrada.
-    * 
-    * @return
-    */
-    public double precio(){
-        return 0.0;
+import java.util.Random;
 
+public class IEntrada {
+    private String nombreEspectaculo;
+    private String  fecha;
+    private String email;
+    private String contrasenia;
+    private int  cantidadEntradas;
+public IEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia,int codigodeentrada, int codidodeentrada) {
+        this.nombreEspectaculo = nombreEspectaculo;
+        this.fecha = fecha;
+        this.email = email;
+        this.contrasenia = contrasenia;
+        codidodeentrada=Generarcodigodeentrada();
    }
+   private int Generarcodigodeentrada() {   
+    Random random = new Random();
+        return random.nextInt(9000) + 1000;
+}
+   public double precio(){
 
-   /**
-    * Si la entrada es para estadio, la ubicacion será "CAMPO". 
-    * sino, será "{SECTOR} f:{NRO FILA} a:{NRO ASIENTO}" 
-    * 
-    * Por ejemplo:
-    *  - CAMPO
-    *  - Platea Común f:3 a:31
-    * @return
-    */;
+        return 0.0;
+   }
+   public String getNombreEspectaculo() {
+    return nombreEspectaculo;
+}
+
+public void setNombreEspectaculo(String nombreEspectaculo) {
+    this.nombreEspectaculo = nombreEspectaculo;
+}
+
+public String getFecha() {
+    return fecha;
+}
+
+public void setFecha(String fecha) {
+    this.fecha = fecha;
+}
+
+public String getEmail() {
+    return email;
+}
+
+public void setEmail(String email) {
+    this.email = email;
+}
+
+public String getContrasenia() {
+    return contrasenia;
+}
+
+public void setContrasenia(String contrasenia) {
+    this.contrasenia = contrasenia;
+}
+
+public int getCantidadEntradas() {
+    return cantidadEntradas;
+}
+
+public void setCantidadEntradas(int cantidadEntradas) {
+    this.cantidadEntradas = cantidadEntradas;
+}
+
    public String ubicacion(){
     return null;
    }
-/**
-    * El toString de cada entrada debe respetar el siguiente formato:
-    *  - "{COD ENTRADA} - {NOMBRE ESPECTACULO} - {FECHA} - {NOMBRE SEDE} - {UBICACION}"
-    *  
-    *  Si la entrada es para estadio, la ubicacion será "CAMPO". sino, será "{SECTOR} f:{NRO FILA} a:{NRO ASIENTO}" 
-    *  Si la fecha de la entrada ya pasó, se le agrega una P luego de la fecha.
-    * 
-    * Por ejemplo:
-    *  - 7896 - Coldplay en vivo - 30/08/2025 - La bombonera - CAMPO
-    *  - 1901 - Stand up Comedy - 30/06/2025 - Teatro San Martín - Platea Común f:3 a:31
-    *  - 7196 - Coldplay en vivo - 30/04/2025 P - La bombonera - CAMPO
-    * @return
-    */
-   public String toString();
+@Override
+public String toString() {
+    return "IEntrada [nombreEspectaculo=" + nombreEspectaculo + ", fecha=" + fecha + ", email=" + email
+            + ", contrasenia=" + contrasenia + ", cantidadEntradas=" + cantidadEntradas + "]";
+}
 
 }

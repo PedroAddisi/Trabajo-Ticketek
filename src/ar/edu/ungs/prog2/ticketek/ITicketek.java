@@ -1,5 +1,6 @@
 package ar.edu.ungs.prog2.ticketek;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,7 +9,7 @@ public class ITicketek {
  HashMap <String, Usuario> listaUsuarios = new HashMap<>();
     LinkedList<Espectaculo> Listaespectaculos = new LinkedList<>();
     LinkedList<sede>Listasede = new LinkedList<>();
-    List<IEntrada> entrdas;
+    HashMap <Integer, IEntrada> listaEntradas = new HashMap<>();
    public void registrarSede(String nombre, String direccion, int capacidadMaxima){
     sede sede = new Estadio(nombre,direccion,capacidadMaxima);
     if (Listasede.contains(sede)) {
@@ -64,13 +65,25 @@ public class ITicketek {
         if (espectaculo.getNombre()==funcion.getNombreEspectaculo()) {
             espectaculo.cargarfunciones(funcion); 
         }
+        else{
         throw new RuntimeException("Digo algo");// Aca tengo que agregar mas exeptions 
         }
     }
-    public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, int cantidadEntradas){
-        return null;
-        
     }
+    public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, int cantidadEntradas){//para estadios
+        List <IEntrada> entradascompradas= new ArrayList<>();
+        if (listaUsuarios.get(email).getContraseña() == contrasenia) {// seria asi ver el tema de los datos de entrada. ver de pasar los parametros dados.
+            for (int i = 0; i >= cantidadEntradas; i++) {
+                IEntrada entrada= new IEntrada();
+                listaUsuarios.get(email).agregarentrada(entrada);
+                entradascompradas.add(entrada);
+            }
+        }
+        else{
+            throw new RuntimeException("Contraseña incorrecta");
+        }
+        return entradascompradas; 
+        }
     public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, String sector, int[] asientos){
         return null;
         
@@ -89,8 +102,12 @@ public class ITicketek {
     }
 
     public List<IEntrada> listarTodasLasEntradasDelUsuario(String email, String contrasenia){
-        return null;
-        
+        if(listaUsuarios.get(email).getContraseña()==contrasenia){
+            return listaUsuarios.get(email).getEntradas();
+        }
+        else{
+            throw new RuntimeException("El usuario no tiene entradas compradas");
+        }
     }
     public  boolean anularEntrada(IEntrada entrada, String contrasenia){
         return false;
