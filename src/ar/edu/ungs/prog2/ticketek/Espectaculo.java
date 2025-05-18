@@ -16,5 +16,9 @@ public class Espectaculo {
     public void cargarfunciones(Funcion funcion){
         listaFunciones.put(funcion.getSede(),funcion.getFecha());
     }
+    @Override
+    public String toString() {
+        return "hola";
+    }
     
 }

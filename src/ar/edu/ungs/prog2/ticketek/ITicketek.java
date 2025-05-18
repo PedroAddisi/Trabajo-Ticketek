@@ -90,8 +90,10 @@ public class ITicketek {
     }
     
     public String listarFunciones(String nombreEspectaculo){
-        return nombreEspectaculo;
-
+        if (Listaespectaculos.contains(nombreEspectaculo)) {// debo retornar un to string de funciones tengo que ver si debo cambiar algo 
+            return 
+            
+        }
     }
     public List<IEntrada> listarEntradasEspectaculo(String nombreEspectaculo){
         return null;
