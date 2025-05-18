@@ -1,12 +1,13 @@
 package ar.edu.ungs.prog2.ticketek;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Usuario {
     private String Nombre;
     private String Email;
     private String Contraseña;
     private String Apellido;
-    private ArrayList <IEntrada> Entradas;
+    private List <IEntrada> Entradas;
     public Usuario(String Email, String Nombre, String Apellido, String Contraseña) {
         Email=this.Email;
         Nombre=this.Nombre;
@@ -49,7 +50,7 @@ public class Usuario {
     public void setApellido(String apellido) {
         Apellido = apellido;
     }
-    public ArrayList<IEntrada> getEntradas() {
+    public List<IEntrada> getEntradas() {
         return Entradas;
     }
     public void setEntradas(ArrayList<IEntrada> entradas) {
