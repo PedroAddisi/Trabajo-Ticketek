@@ -30,4 +30,8 @@ public class Funcion {
     public void setPrecioBase(double precioBase) {
         this.precioBase = precioBase;
     }
+    @Override
+    public String toString() {
+        return "{" + fecha + "}"+ "{"+ sede + "}" + "{" +/* Entradas Vendidas*/  "}" +"{" + sede.getCapacidadMaxima() + "}";
+    }
 }

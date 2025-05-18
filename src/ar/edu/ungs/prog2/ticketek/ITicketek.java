@@ -90,9 +90,16 @@ public class ITicketek {
     }
     
     public String listarFunciones(String nombreEspectaculo){
-        if (Listaespectaculos.contains(nombreEspectaculo)) {// debo retornar un to string de funciones tengo que ver si debo cambiar algo 
-            return 
+        if (Listaespectaculos.contains(nombreEspectaculo)) {
+            for (Espectaculo espectaculo : Listaespectaculos) {
+               espectaculo.listaFunciones.toString();  
+            }
+            return "funciones de "+nombreEspectaculo;
+            //Ahora tengo que entrar a la lista de espectaculos. entrar a las funciones y tirar el tostring
             
+        }
+        else{
+            throw new RuntimeException("Espectaculo no encontrado");
         }
     }
     public List<IEntrada> listarEntradasEspectaculo(String nombreEspectaculo){
@@ -100,7 +107,15 @@ public class ITicketek {
         
     }
     public  List<IEntrada> listarEntradasFuturas(String email, String contrasenia){
-        return null;
+        if( listaUsuarios.get(email).getContraseña() == contrasenia){
+            listaUsuarios.get(email).imprimirentradas();//hacer funcion que imprima las entradas del usuario;
+                
+            }
+        }
+        else{
+            throw new RuntimeException("Contraseña incorrecta");
+        }
+
     }
 
     public List<IEntrada> listarTodasLasEntradasDelUsuario(String email, String contrasenia){
