@@ -13,9 +13,6 @@ public class Funcion {
     public String getNombreEspectaculo() {
         return nombreEspectaculo;
     }
-    public void setNombreEspectaculo(String nombreEspectaculo) {
-        this.nombreEspectaculo = nombreEspectaculo;
-    }
     public  LocalDate getFecha() {
         return fecha;
     }
@@ -25,23 +22,14 @@ public class Funcion {
         return fechaString;
 
     }
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
     public ar.edu.ungs.prog2.ticketek.sede getSede() {
         return sede;
     }
      public String nombregetSede() {
         return sede.getNombre();
     }
-    public void setSede(ar.edu.ungs.prog2.ticketek.sede sede) {
-        this.sede = sede;
-    }
     public double getPrecioBase() {
         return precioBase;
-    }
-    public void setPrecioBase(double precioBase) {
-        this.precioBase = precioBase;
     }
     @Override
     public String toString() {

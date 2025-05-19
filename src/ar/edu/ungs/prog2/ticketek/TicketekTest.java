@@ -19,7 +19,7 @@ public class TicketekTest{
     private List<IEntrada> entradasJavierColdplay;
     @Before
     public void init() {
-    	ticketek = new ITicketek();
+    	ticketek = new Ticketek();
 
         ticketek.registrarUsuario("nores@campus.ungs.edu.ar", "Jose", "Nores", "1234");
         ticketek.registrarUsuario("javierm@campus.ungs.edu.ar", "Javier", "Marenco", "1234");

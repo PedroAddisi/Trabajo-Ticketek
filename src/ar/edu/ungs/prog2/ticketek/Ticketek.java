@@ -7,18 +7,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Random;
 
-public class Ticketek {
-    HashMap <String, Usuario> listaUsuarios = new HashMap<>();
-    List <Espectaculo> Listaespectaculos = new ArrayList<>();
-    public List<Espectaculo> getListaespectaculos() {
-        return Listaespectaculos;
-    }
-    public void setListaespectaculos(List<Espectaculo> listaespectaculos) {
-        Listaespectaculos = listaespectaculos;
-    }
+public class Ticketek implements ITicketek{
+ HashMap <String, Usuario> listaUsuarios = new HashMap<>();
+ List <Espectaculo> Listaespectaculos = new ArrayList<>();
     LinkedList<sede>Listasede = new LinkedList<>();
-    HashMap <Integer, IEntrada> listaEntradas = new HashMap<>();
    public void registrarSede(String nombre, String direccion, int capacidadMaxima){// es para estadios
     if (capacidadMaxima < 0 || nombre.length() < 0 || direccion.length() <0 ) {
         throw new RuntimeException("Error al colocar los datos.");
@@ -31,7 +25,7 @@ public class Ticketek {
       Listasede.add(sede);
     }
    }
-  public  void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila, String[] sectores, int[] capacidad, int[] porcentajeAdicional){
+  public  void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila, String[] sectores, int[] capacidad, int[] porcentajeAdicional){//Falta colocar el tema de filas y sectores
     if (capacidadMaxima < 0 || nombre.length() < 0 || direccion.length() <0 ) {
         throw new RuntimeException("Error al colocar los datos.");
     }
@@ -44,7 +38,7 @@ public class Ticketek {
       Listasede.add(sede);
     }
   }
-   public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila, int cantidadPuestos, double precioConsumicion, String[] sectores, int[] capacidad, int[] porcentajeAdicional){
+   public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila, int cantidadPuestos, double precioConsumicion, String[] sectores, int[] capacidad, int[] porcentajeAdicional){//Falta colocar el tema de filas y sectores
     if (capacidadMaxima < 0 || nombre.length() < 0 || direccion.length() <0 ) {
         throw new RuntimeException("Error al colocar los datos.");
     }
@@ -80,12 +74,14 @@ public class Ticketek {
     }
     }
     public  void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+         LocalDate fechadate= LocalDate.parse(fecha, formatter);
         if (!Listaespectaculos.contains(nombreEspectaculo) || !Listasede.contains(sede) || precioBase < 0) {
             throw new RuntimeException ("Error al colocar datos");
         }
         Funcion funcion = new Funcion(nombreEspectaculo, fecha, sede, precioBase);
         for (Espectaculo espectaculo : Listaespectaculos) {
-        if (espectaculo.getNombre()==funcion.getNombreEspectaculo() && !fecha.equals(funcion.getFecha())) {// aca debo cambiar por .date
+        if (espectaculo.getNombre()==funcion.getNombreEspectaculo()) {// aca debo cambiar por .date
             espectaculo.cargarfunciones(funcion); 
         }
         else{
@@ -94,18 +90,25 @@ public class Ticketek {
     }
     }
     public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, int cantidadEntradas){//para estadio
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
          LocalDate fechadate= LocalDate.parse(fecha, formatter);
-               if (!Listaespectaculos.contains(nombreEspectaculo) || !listaUsuarios.containsKey(email) /*si la sede de funcion esta numerada */) {
+               if (!Listaespectaculos.contains(nombreEspectaculo) || !listaUsuarios.containsKey(email)/*  si la sede de funcion esta numerada*/ ) {
             throw new RuntimeException("error con algunos de los datos de espectaculo,usaurio o la funcion no trasncurre en un estadio ");
         }
-        List <IEntrada> entradascompradas= new ArrayList<>();// ver el extends de IEntrada.
-        if (listaUsuarios.get(email).getContraseña() == contrasenia) {// seria asi ver el tema de los datos de entrada. ver de pasar los parametros dados.
+        List <IEntrada> entradascompradas= new ArrayList<>();
+        if (listaUsuarios.get(email).getContraseña() == contrasenia) {
             for (int i = 0; i >= cantidadEntradas; i++) {
-                Entrada entrada= new Entrada(nombreEspectaculo , fechadate , email);//arreglar
+                Entrada entrada= new Entrada(nombreEspectaculo , fechadate , email,Generarcodigodeentrada());
                 listaUsuarios.get(email).agregarentrada(entrada);
                 entradascompradas.add(entrada);
-                //seria el quitar entrada de aca.
+            }
+            for (Espectaculo espectaculo : Listaespectaculos) {
+                if (espectaculo.getNombre() ==nombreEspectaculo) {
+                    for (Funcion funcion : espectaculo.listaFunciones) {
+                    funcion.getSede().cantidaddeentrdasvendidas(cantidadEntradas);
+                    funcion.getSede().quitarcapacidad(cantidadEntradas);
+                }               
+                }    
             }
         }
         else{
@@ -113,15 +116,15 @@ public class Ticketek {
         }
         return entradascompradas; 
         }
-    public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, String sector, int[] asientos){// mini estadio y teatro 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, String sector, int[] asientos){// agregar sector y entradas
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
          LocalDate fechadate= LocalDate.parse(fecha, formatter);
-        if (!Listaespectaculos.contains(nombreEspectaculo) || !listaUsuarios.containsKey(email) /*si la sede de funcion esta numerada */) {
+        if (!Listaespectaculos.contains(nombreEspectaculo) || !listaUsuarios.containsKey(email) /*si la sede de funcion esta numerada*/ ) {
             throw new RuntimeException("error con algunos de los datos de espectaculo,usaurio o la funcion trasncurre en un estadio ");
         }
         List <IEntrada> entradascompradas= new ArrayList<>();
         if (listaUsuarios.get(email).getContraseña() == contrasenia) {
-                Entrada entrada= new Entrada(nombreEspectaculo, fechadate , email);
+                Entrada entrada= new Entrada(nombreEspectaculo, fechadate , email, Generarcodigodeentrada());
                 listaUsuarios.get(email).agregarentrada(entrada);
                 entradascompradas.add(entrada);
                 //tengo que entrar a teatro o miniestadio agarrar y reservar la cantidad de asientos pedidas.
@@ -152,7 +155,7 @@ public class Ticketek {
         }
         List <IEntrada> entradasdelEspectaculo= new ArrayList<>();
         for (Entry<String, Usuario> usuario : listaUsuarios.entrySet()) { //el entry se utiliza para entrar al hashmap por medio foreach y el entry set lo hace posible
-            for (Entrada entrada : usuario.getValue().getEntradas()) {
+            for (Entrada entrada : usuario.getValue().getEntradas()) {/Ver recorrido de entradas
                 if (entrada.getNombreEspectaculo()== nombreEspectaculo) {
                     entradasdelEspectaculo.add(entrada);
                 }        
@@ -163,7 +166,7 @@ public class Ticketek {
     public  List<IEntrada> listarEntradasFuturas(String email, String contrasenia){
         List <IEntrada> entradasfuturas= new ArrayList<>();
         if( listaUsuarios.get(email).getContraseña() == contrasenia){
-            for (Entrada entradas : listaUsuarios.get(email).getEntradas()) {
+            for (Entrada entradas : listaUsuarios.get(email).getEntradas()) {/Ver recorrido de entradas
                 if (entradas.getFecha().isAfter(LocalDate.now())) {
                     entradasfuturas.add(entradas);
                 }
@@ -180,7 +183,7 @@ public class Ticketek {
     public List<IEntrada> listarTodasLasEntradasDelUsuario(String email, String contrasenia){
         List <IEntrada> entradasTodas= new ArrayList<>();
         if(listaUsuarios.get(email).getContraseña()==contrasenia){
-               for (Entrada entradas : listaUsuarios.get(email).getEntradas()) {
+               for (Entrada entradas : listaUsuarios.get(email).getEntradas()) {/Ver recorrido de entradas
                     entradasTodas.add(entradas);
                 }
         }
@@ -193,8 +196,8 @@ public class Ticketek {
 
         return false;
     }
-    public IEntrada cambiarEntrada( IEntrada entrada, String contrasenia, String fecha, String sector, int asiento){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public IEntrada cambiarEntrada( IEntrada entrada, String contrasenia, String fecha, String sector, int asiento){//ver tema sector y asiento
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
          LocalDate fechadate= LocalDate.parse(fecha, formatter);
         return entrada;
     }
@@ -203,22 +206,23 @@ public class Ticketek {
         
     }
     public  double costoEntrada(String nombreEspectaculo, String fecha){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
          LocalDate fechadate= LocalDate.parse(fecha, formatter);
+        double costo =0;
         for (Espectaculo espectaculo : Listaespectaculos) {
             if (espectaculo.getNombre() == nombreEspectaculo) {
                 for (Funcion funcion : espectaculo.listaFunciones) {
                     if (funcion.getFecha().equals(fechadate)) {
-                        return funcion.getPrecioBase();
+                        costo= funcion.getPrecioBase();
                     } 
                 } 
             }
         }
-        throw new RuntimeException ("Espectaculo no encontrado");
+        return costo;
          }
 
-    public double costoEntrada(String nombreEspectaculo, String fecha, String sector){
-         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public double costoEntrada(String nombreEspectaculo, String fecha, String sector){// ver tema sector
+         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
          LocalDate fechadate= LocalDate.parse(fecha, formatter);
         for (Espectaculo espectaculo : Listaespectaculos) {
             if (espectaculo.getNombre() == nombreEspectaculo) {
@@ -234,7 +238,7 @@ public class Ticketek {
     public double totalRecaudado(String nombreEspectaculo){
         Double preciototak =0.0;
         for (Entry<String, Usuario> usuario : listaUsuarios.entrySet()) { //el entry se utiliza para entrar al hashmap por medio foreach y el entry set lo hace posible
-            for (Entrada entrada : usuario.getValue().getEntradas()) {
+            for (Entrada entrada : usuario.getValue().getEntradas()) {//Ver recorrido de entradas
                 if (entrada.getNombreEspectaculo() == nombreEspectaculo) {
                     preciototak =preciototak+ entrada.precio();
                     
@@ -243,9 +247,20 @@ public class Ticketek {
 }
     return preciototak;
     }
-    public double totalRecaudadoPorSede(String nombreEspectaculo, String nombreSede){
-        return 0;
-        
+    public double totalRecaudadoPorSede(String nombreEspectaculo, String nombreSede){// era en o de 1 
+        double totalrecaudado=0;
+            for (Espectaculo espectaculo : Listaespectaculos) {
+            for (Funcion funcion : espectaculo.listaFunciones) {
+                if ((funcion.nombregetSede() == nombreSede)&& nombreSede == "Estadio" && funcion.getNombreEspectaculo() == nombreEspectaculo) {
+                    totalrecaudado=+funcion.getSede().getCapacidad()*funcion.getPrecioBase();
+                
+            }
+        }   
     }
-
+    return totalrecaudado;
 }
+ public int Generarcodigodeentrada() {   
+    Random random = new Random();
+        return random.nextInt(9000) + 1000;
+}
+    }
