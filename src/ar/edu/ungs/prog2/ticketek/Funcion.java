@@ -1,7 +1,10 @@
 package ar.edu.ungs.prog2.ticketek;
+
+import java.time.*;
+
 public class Funcion {
    private String nombreEspectaculo;
-    private String fecha;
+    private LocalDate fecha;
     private sede sede;
     private double precioBase;
     public Funcion(String nombreEspectaculo2, String fecha2, String sede2, double precioBase2) {
@@ -12,10 +15,10 @@ public class Funcion {
     public void setNombreEspectaculo(String nombreEspectaculo) {
         this.nombreEspectaculo = nombreEspectaculo;
     }
-    public  String getFecha() {
+    public  LocalDate getFecha() {
         return fecha;
     }
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
     public ar.edu.ungs.prog2.ticketek.sede getSede() {
