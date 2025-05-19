@@ -10,11 +10,4 @@ public class Teatro extends sede {
         super(nombre, direccion, capacidadMaxima);
         
     }
-
-    @Override
-    protected void quitarcapacidad(String fecha) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'quitarcapacidad'");
-    }
-
 }

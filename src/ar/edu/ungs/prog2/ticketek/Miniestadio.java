@@ -8,11 +8,4 @@ public class Miniestadio  extends sede{
         super(nombre, direccion, capacidadMaxima);
         //TODO Auto-generated constructor stub
     }
-
-    @Override
-    protected void quitarcapacidad(String fecha) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'quitarcapacidad'");
-    }
-
 }

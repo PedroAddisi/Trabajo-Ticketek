@@ -9,18 +9,16 @@ public class Entrada extends IEntrada {
     private String contrasenia;
     private int  cantidadEntradas;
     private int codigodeentrada=Generarcodigodeentrada();
-public Entrada(String nombreEspectaculo, LocalDate fecha, String email, String contrasenia) {
+public Entrada(String nombreEspectaculo, LocalDate fecha, String email) {
         this.nombreEspectaculo = nombreEspectaculo;
         this.fecha = fecha;
         this.email = email;
-        this.contrasenia = contrasenia;
    }
    private int Generarcodigodeentrada() {   
     Random random = new Random();
         return random.nextInt(9000) + 1000;
 }
    public double precio(){
-
         return 0.0;
    }
    public String getNombreEspectaculo() {

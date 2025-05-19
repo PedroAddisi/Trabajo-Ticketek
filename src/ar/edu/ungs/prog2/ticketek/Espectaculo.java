@@ -1,10 +1,14 @@
 package ar.edu.ungs.prog2.ticketek;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Espectaculo {
     private String Nombre;
-    HashMap <sede, String> listaFunciones = new HashMap<>();
+    public List<Funcion> listaFunciones = new ArrayList<>();
+    public List<Funcion> getListaFunciones() {
+        return listaFunciones;
+    }
     public Espectaculo(String nombre2) {
     }
     public String getNombre() {
@@ -14,7 +18,7 @@ public class Espectaculo {
         Nombre = nombre;
     }
     public void cargarfunciones(Funcion funcion){
-        listaFunciones.put(funcion.getSede(),funcion.getFecha());
+        listaFunciones.add(funcion);
     }
     @Override
     public String toString() {

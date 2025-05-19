@@ -1,6 +1,7 @@
 package ar.edu.ungs.prog2.ticketek;
 
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class Funcion {
    private String nombreEspectaculo;
@@ -18,11 +19,20 @@ public class Funcion {
     public  LocalDate getFecha() {
         return fecha;
     }
+    public  String getFechaString() {
+        DateTimeFormatter Cambiador= DateTimeFormatter.ofPattern("dd/mm/yyyy");
+        String fechaString =fecha.format(Cambiador);
+        return fechaString;
+
+    }
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
     public ar.edu.ungs.prog2.ticketek.sede getSede() {
         return sede;
+    }
+     public String nombregetSede() {
+        return sede.getNombre();
     }
     public void setSede(ar.edu.ungs.prog2.ticketek.sede sede) {
         this.sede = sede;
