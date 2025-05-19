@@ -1,15 +1,15 @@
 package ar.edu.ungs.prog2.ticketek;
-
 import java.util.Random;
+import java.time.*;
 
 public class Entrada extends IEntrada {
     private String nombreEspectaculo;
-    private String  fecha;
+    private  LocalDate  fecha;
     private String email;
     private String contrasenia;
     private int  cantidadEntradas;
     private int codigodeentrada=Generarcodigodeentrada();
-public Entrada(String nombreEspectaculo, String fecha, String email, String contrasenia) {
+public Entrada(String nombreEspectaculo, LocalDate fecha, String email, String contrasenia) {
         this.nombreEspectaculo = nombreEspectaculo;
         this.fecha = fecha;
         this.email = email;
@@ -31,11 +31,11 @@ public void setNombreEspectaculo(String nombreEspectaculo) {
     this.nombreEspectaculo = nombreEspectaculo;
 }
 
-public String getFecha() {
+public LocalDate getFecha() {
     return fecha;
 }
 
-public void setFecha(String fecha) {
+public void setFecha(LocalDate fecha) {
     this.fecha = fecha;
 }
 

@@ -1,5 +1,7 @@
 package ar.edu.ungs.prog2.ticketek;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -10,13 +12,13 @@ public class ITicketek {
     List <Espectaculo> Listaespectaculos = new ArrayList<>();
     LinkedList<sede>Listasede = new LinkedList<>();
     HashMap <Integer, IEntrada> listaEntradas = new HashMap<>();
-   public void registrarSede(String nombre, String direccion, int capacidadMaxima){
+   public void registrarSede(String nombre, String direccion, int capacidadMaxima){// es para estadios
     if (capacidadMaxima < 0 || nombre.length() < 0 || direccion.length() <0 ) {
         throw new RuntimeException("Error al colocar los datos.");
     }
     sede sede = new Estadio(nombre,direccion,capacidadMaxima);
     if (Listasede.contains(sede)) {
-      throw new RuntimeException("Estadio ya regitrado");// agregar mas exception de tipo de datos;  
+      throw new RuntimeException("Estadio ya regitrado");
     }
     else{
       Listasede.add(sede);
@@ -26,9 +28,9 @@ public class ITicketek {
     if (capacidadMaxima < 0 || nombre.length() < 0 || direccion.length() <0 ) {
         throw new RuntimeException("Error al colocar los datos.");
     }
-    sede sede = new Teatro(nombre,direccion,capacidadMaxima, asientosPorFila, sectores, porcentajeAdicional, porcentajeAdicional);
+    sede sede = new Teatro(nombre,direccion,capacidadMaxima, asientosPorFila, sectores, capacidad, porcentajeAdicional);
     if (Listasede.contains(sede)) {
-      throw new RuntimeException("Teatro ya regitrado");// agregar mas exception de tipo de datos;
+      throw new RuntimeException("Teatro ya regitrado");
       
     }
     else{
@@ -39,9 +41,9 @@ public class ITicketek {
     if (capacidadMaxima < 0 || nombre.length() < 0 || direccion.length() <0 ) {
         throw new RuntimeException("Error al colocar los datos.");
     }
-    sede sede = new Miniestadio(nombre,direccion,capacidadMaxima, asientosPorFila, cantidadPuestos, precioConsumicion, sectores, porcentajeAdicional, porcentajeAdicional);
+    sede sede = new Miniestadio(nombre,direccion,capacidadMaxima, asientosPorFila, cantidadPuestos, precioConsumicion, sectores, capacidad, porcentajeAdicional);
     if (Listasede.contains(sede)) {
-      throw new RuntimeException("Miniestadio ya regitrado");// agregar mas exception de tipo de datos;
+      throw new RuntimeException("Miniestadio ya regitrado");
       
     }
     else{
@@ -54,7 +56,7 @@ public class ITicketek {
     }
     Usuario usuario = new Usuario(email, nombre, apellido, contrasenia);
     if (listaUsuarios.containsKey(usuario.getEmail())){
-      throw new RuntimeException(" Emial Ya registrado");// agregar mas exception de tipo de datos;
+      throw new RuntimeException(" Emial Ya registrado");
     }
     listaUsuarios.put(email, usuario);
   }
@@ -63,7 +65,7 @@ public class ITicketek {
             throw new RuntimeException ("el nombre no puede ser vacio");
         }
         Espectaculo espectaculo = new Espectaculo(nombre);
-        if (Listaespectaculos.contains(espectaculo.getNombre())) {// aca ver puede ser que tire error al compilar
+        if (Listaespectaculos.contains(espectaculo.getNombre())) {
         throw new RuntimeException("Espectaculo ya registrada"); 
         } 
         else{
@@ -80,18 +82,21 @@ public class ITicketek {
             espectaculo.cargarfunciones(funcion); 
         }
         else{
-        throw new RuntimeException("no se pudo encontrar espectaculo");// Aca tengo que agregar mas exeptions 
+        throw new RuntimeException("no se pudo encontrar espectaculo");
         }
     }
     }
     public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, int cantidadEntradas){//para estadios
+        DateTimeFormatter Cambiador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechalocal = LocalDate.parse(fecha, Cambiador);
+        String fechaString= fechalocal.toString();
         if (!Listaespectaculos.contains(nombreEspectaculo) || !listaUsuarios.containsKey(email) /*si la sede de funcion esta numerada */) {
             throw new RuntimeException("error con algunos de los datos de espectaculo,usaurio o la funcion no trasncurre en un estadio ");
         }
-        List <IEntrada> entradascompradas= new ArrayList<>();
+        List <IEntrada> entradascompradas= new ArrayList<>();// ver el extends de IEntrada.
         if (listaUsuarios.get(email).getContraseña() == contrasenia) {// seria asi ver el tema de los datos de entrada. ver de pasar los parametros dados.
             for (int i = 0; i >= cantidadEntradas; i++) {
-                Entrada entrada= new Entrada(nombreEspectaculo, email, fecha,contrasenia);
+                Entrada entrada= new Entrada(nombreEspectaculo, email, fechaString ,contrasenia);//arreglar
                 listaUsuarios.get(email).agregarentrada(entrada);
                 entradascompradas.add(entrada);
                 //seria el quitar entrada de aca.
