@@ -12,7 +12,7 @@ public class Funcion {
     public void setNombreEspectaculo(String nombreEspectaculo) {
         this.nombreEspectaculo = nombreEspectaculo;
     }
-    public String getFecha() {
+    public  String getFecha() {
         return fecha;
     }
     public void setFecha(String fecha) {

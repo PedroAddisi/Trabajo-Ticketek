@@ -20,7 +20,7 @@ public class Usuario {
         }      
     public void vertodaslaseEntradas(){
          }
-    public void agregarentrada(IEntrada entrada){
+    public void agregarentrada(Entrada entrada){
         Entradas.add(entrada);    
          }    
     public void anularentradas(int codigodeentrada){
