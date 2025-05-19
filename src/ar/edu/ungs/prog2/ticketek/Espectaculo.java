@@ -19,6 +19,5 @@ public class Espectaculo {
     @Override
     public String toString() {
         return "hola";
-    }
-    
+    }  
 }

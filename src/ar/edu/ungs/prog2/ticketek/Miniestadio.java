@@ -6,4 +6,10 @@ public class Miniestadio  extends sede{
         //TODO Auto-generated constructor stub
     }
 
+    @Override
+    protected void quitarcapacidad(String fecha) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'quitarcapacidad'");
+    }
+
 }

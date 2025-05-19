@@ -1,26 +1,28 @@
 package ar.edu.ungs.prog2.ticketek;
-public abstract class IEntrada {/* 
+
+import java.util.Random;
+
+public class Entrada extends IEntrada {
     private String nombreEspectaculo;
     private String  fecha;
     private String email;
     private String contrasenia;
     private int  cantidadEntradas;
-public IEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia,int codigodeentrada, int codidodeentrada) {
+    private int codigodeentrada=Generarcodigodeentrada();
+public Entrada(String nombreEspectaculo, String fecha, String email, String contrasenia) {
         this.nombreEspectaculo = nombreEspectaculo;
         this.fecha = fecha;
         this.email = email;
         this.contrasenia = contrasenia;
-        codidodeentrada=Generarcodigodeentrada();
    }
    private int Generarcodigodeentrada() {   
     Random random = new Random();
         return random.nextInt(9000) + 1000;
 }
-        */
    public double precio(){
 
         return 0.0;
-   }/* 
+   }
    public String getNombreEspectaculo() {
     return nombreEspectaculo;
 }
@@ -60,13 +62,9 @@ public int getCantidadEntradas() {
 public void setCantidadEntradas(int cantidadEntradas) {
     this.cantidadEntradas = cantidadEntradas;
 }
-*/
-
-   public String ubicacion(){
-    return null;
-   }
 @Override
 public String toString() {
-    return "holas";
+    return "Entrada [nombreEspectaculo=" + nombreEspectaculo + ", fecha=" + fecha + ", email=" + email
+            + ", contrasenia=" + contrasenia + ", cantidadEntradas=" + cantidadEntradas + "]";
 }
 }
