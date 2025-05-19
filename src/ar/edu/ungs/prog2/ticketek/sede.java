@@ -4,6 +4,8 @@ public abstract class sede {
     protected String direccion;
     protected int capacidadMaxima; 
     protected int capacidad;
+    //Hacer Arraylist sectores y clase sectores.
+    // crear clase sector para filas 
     public String getNombre() {
         return nombre;
     }

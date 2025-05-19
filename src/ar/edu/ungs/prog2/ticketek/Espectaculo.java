@@ -14,9 +14,6 @@ public class Espectaculo {
     public String getNombre() {
         return Nombre;
     }
-    public void setNombre(String nombre) {
-        Nombre = nombre;
-    }
     public void cargarfunciones(Funcion funcion){
         listaFunciones.add(funcion);
     }
