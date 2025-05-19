@@ -3,6 +3,7 @@ public abstract class sede {
     protected String nombre;
     protected String direccion;
     protected int capacidadMaxima; 
+    protected int capacidad;
     public String getNombre() {
         return nombre;
     }
@@ -22,5 +23,16 @@ public abstract class sede {
         return precioBase;
         
     }
-    protected abstract void quitarcapacidad(String fecha);
+    protected int quitarcapacidad(int i){
+        this.capacidadMaxima=-i;
+        return capacidadMaxima;
+
+    }
+    protected int cantidaddeentrdasvendidas(int i){
+        this.capacidad=+i;;
+        return capacidad ;
+    }
+    public int getCapacidad() {
+        return capacidad;
+    }
 }

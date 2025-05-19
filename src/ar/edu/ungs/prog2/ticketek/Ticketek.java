@@ -7,9 +7,16 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
-public class ITicketek {
- HashMap <String, Usuario> listaUsuarios = new HashMap<>();
- List <Espectaculo> Listaespectaculos = new ArrayList<>();
+
+public class Ticketek {
+    HashMap <String, Usuario> listaUsuarios = new HashMap<>();
+    List <Espectaculo> Listaespectaculos = new ArrayList<>();
+    public List<Espectaculo> getListaespectaculos() {
+        return Listaespectaculos;
+    }
+    public void setListaespectaculos(List<Espectaculo> listaespectaculos) {
+        Listaespectaculos = listaespectaculos;
+    }
     LinkedList<sede>Listasede = new LinkedList<>();
     HashMap <Integer, IEntrada> listaEntradas = new HashMap<>();
    public void registrarSede(String nombre, String direccion, int capacidadMaxima){// es para estadios
@@ -73,14 +80,12 @@ public class ITicketek {
     }
     }
     public  void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
-         LocalDate fechadate= LocalDate.parse(fecha, formatter);
         if (!Listaespectaculos.contains(nombreEspectaculo) || !Listasede.contains(sede) || precioBase < 0) {
             throw new RuntimeException ("Error al colocar datos");
         }
         Funcion funcion = new Funcion(nombreEspectaculo, fecha, sede, precioBase);
         for (Espectaculo espectaculo : Listaespectaculos) {
-        if (espectaculo.getNombre()==funcion.getNombreEspectaculo()) {// aca debo cambiar por .date
+        if (espectaculo.getNombre()==funcion.getNombreEspectaculo() && !fecha.equals(funcion.getFecha())) {// aca debo cambiar por .date
             espectaculo.cargarfunciones(funcion); 
         }
         else{
@@ -89,25 +94,18 @@ public class ITicketek {
     }
     }
     public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, int cantidadEntradas){//para estadio
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
          LocalDate fechadate= LocalDate.parse(fecha, formatter);
-               if (!Listaespectaculos.contains(nombreEspectaculo) || !listaUsuarios.containsKey(email)/*  si la sede de funcion esta numerada*/ ) {
+               if (!Listaespectaculos.contains(nombreEspectaculo) || !listaUsuarios.containsKey(email) /*si la sede de funcion esta numerada */) {
             throw new RuntimeException("error con algunos de los datos de espectaculo,usaurio o la funcion no trasncurre en un estadio ");
         }
         List <IEntrada> entradascompradas= new ArrayList<>();// ver el extends de IEntrada.
-        if (listaUsuarios.get(email).getContraseña() == contrasenia) {
+        if (listaUsuarios.get(email).getContraseña() == contrasenia) {// seria asi ver el tema de los datos de entrada. ver de pasar los parametros dados.
             for (int i = 0; i >= cantidadEntradas; i++) {
-                Entrada entrada= new Entrada(nombreEspectaculo , fechadate , email);
+                Entrada entrada= new Entrada(nombreEspectaculo , fechadate , email);//arreglar
                 listaUsuarios.get(email).agregarentrada(entrada);
                 entradascompradas.add(entrada);
-            }
-            for (Espectaculo espectaculo : Listaespectaculos) {
-                if (espectaculo.getNombre() ==nombreEspectaculo) {
-                    for (Funcion funcion : espectaculo.listaFunciones) {
-                    funcion.getSede().cantidaddeentrdasvendidas(cantidadEntradas);
-                    funcion.getSede().quitarcapacidad(cantidadEntradas);
-                }               
-                }    
+                //seria el quitar entrada de aca.
             }
         }
         else{
@@ -116,9 +114,9 @@ public class ITicketek {
         return entradascompradas; 
         }
     public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, String sector, int[] asientos){// mini estadio y teatro 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
          LocalDate fechadate= LocalDate.parse(fecha, formatter);
-        if (!Listaespectaculos.contains(nombreEspectaculo) || !listaUsuarios.containsKey(email) /*si la sede de funcion esta numerada*/ ) {
+        if (!Listaespectaculos.contains(nombreEspectaculo) || !listaUsuarios.containsKey(email) /*si la sede de funcion esta numerada */) {
             throw new RuntimeException("error con algunos de los datos de espectaculo,usaurio o la funcion trasncurre en un estadio ");
         }
         List <IEntrada> entradascompradas= new ArrayList<>();
@@ -196,7 +194,7 @@ public class ITicketek {
         return false;
     }
     public IEntrada cambiarEntrada( IEntrada entrada, String contrasenia, String fecha, String sector, int asiento){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
          LocalDate fechadate= LocalDate.parse(fecha, formatter);
         return entrada;
     }
@@ -205,23 +203,22 @@ public class ITicketek {
         
     }
     public  double costoEntrada(String nombreEspectaculo, String fecha){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
          LocalDate fechadate= LocalDate.parse(fecha, formatter);
-        double costo =0;
         for (Espectaculo espectaculo : Listaespectaculos) {
             if (espectaculo.getNombre() == nombreEspectaculo) {
                 for (Funcion funcion : espectaculo.listaFunciones) {
                     if (funcion.getFecha().equals(fechadate)) {
-                        costo= funcion.getPrecioBase();
+                        return funcion.getPrecioBase();
                     } 
                 } 
             }
         }
-        return costo;
+        throw new RuntimeException ("Espectaculo no encontrado");
          }
 
     public double costoEntrada(String nombreEspectaculo, String fecha, String sector){
-         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
          LocalDate fechadate= LocalDate.parse(fecha, formatter);
         for (Espectaculo espectaculo : Listaespectaculos) {
             if (espectaculo.getNombre() == nombreEspectaculo) {
@@ -247,15 +244,8 @@ public class ITicketek {
     return preciototak;
     }
     public double totalRecaudadoPorSede(String nombreEspectaculo, String nombreSede){
-        double totalrecaudado=0;
-        for (Espectaculo espectaculo : Listaespectaculos) {
-            for (Funcion funcion : espectaculo.listaFunciones) {
-                if ((funcion.nombregetSede() == nombreSede)&& nombreSede == "Estadio" && funcion.getNombreEspectaculo() == nombreEspectaculo) {
-                    totalrecaudado=+funcion.getSede().getCapacidad()*funcion.getPrecioBase();
-                
-            }
-        }   
+        return 0;
+        
     }
-    return totalrecaudado;
-}
+
 }

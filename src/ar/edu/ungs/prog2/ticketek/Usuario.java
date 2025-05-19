@@ -7,7 +7,7 @@ public class Usuario {
     private String Email;
     private String Contraseña;
     private String Apellido;
-    private List <IEntrada> Entradas;
+    private List <Entrada> Entradas;
     public Usuario(String Email, String Nombre, String Apellido, String Contraseña) {
         Email=this.Email;
         Nombre=this.Nombre;
@@ -50,10 +50,10 @@ public class Usuario {
     public void setApellido(String apellido) {
         Apellido = apellido;
     }
-    public List<IEntrada> getEntradas() {
+    public List<Entrada> getEntradas() {
         return Entradas;
     }
-    public void setEntradas(ArrayList<IEntrada> entradas) {
+    public void setEntradas(ArrayList<Entrada> entradas) {
         Entradas = entradas;
     }
 }
