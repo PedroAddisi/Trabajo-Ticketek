@@ -1,5 +1,5 @@
 package ar.edu.ungs.prog2.ticketek;
-public class Miniestadio  extends sede{
+public class Miniestadio  extends Sedes{
     private int plateaComun = capacidadMaxima / 4;
     private int plateavip = capacidadMaxima / 4;
     private int plateaBaja = capacidadMaxima / 4;

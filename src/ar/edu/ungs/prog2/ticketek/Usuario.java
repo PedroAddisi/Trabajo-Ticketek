@@ -1,8 +1,5 @@
 package ar.edu.ungs.prog2.ticketek;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
 public class Usuario {
     private String Nombre;
     private String Email;
@@ -14,10 +11,12 @@ public class Usuario {
         return entradas;
     }
     public Usuario(String Email, String Nombre, String Apellido, String Contraseña) {
-        Email=this.Email;
-        Nombre=this.Nombre;
-        Apellido=this.Apellido;
-        Contraseña=this.Contraseña;
+        this.Email=Email;
+        this.Nombre=Nombre;
+        this.Apellido=Apellido;
+        this.Contraseña=Contraseña;
+
+
     }
     public void agregarentrada(Entrada entrada){
         entradas.put(entrada.getCodigodeentrada(),entrada);    

@@ -1,5 +1,4 @@
 package ar.edu.ungs.prog2.ticketek;
-import java.util.Random;
 import java.time.*;
 
 public class Entrada implements IEntrada {
