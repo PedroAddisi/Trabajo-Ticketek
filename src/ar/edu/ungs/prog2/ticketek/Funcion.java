@@ -6,14 +6,17 @@ import java.time.format.DateTimeFormatter;
 public class Funcion {
    private String nombreEspectaculo;
     private LocalDate fecha;
-    private Sedes sede;
+    private String sede;
     private double precioBase;
+    private String fechastring;
     public Funcion(String nombreEspectaculo2, String fecha2, String sede2, double precioBase2) {
         this.nombreEspectaculo=nombreEspectaculo2;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
         LocalDate fecha1 = LocalDate.parse(fecha2, formatter);
         this.fecha=fecha1;
         this.precioBase=precioBase2;
+        this.fechastring=fecha2;
+        this.sede=sede2;
     }
     public String getNombreEspectaculo() {
         return nombreEspectaculo;
@@ -21,23 +24,17 @@ public class Funcion {
     public  LocalDate getFecha() {
         return fecha;
     }
-    public  String getFechaString() {
-        DateTimeFormatter Cambiador= DateTimeFormatter.ofPattern("dd/mm/yy");
-        String fechaString =fecha.format(Cambiador);
-        return fechaString;
-
-    }
-    public ar.edu.ungs.prog2.ticketek.Sedes getSede() {
+    public String getSede() {
         return sede;
-    }
-     public String nombregetSede() {
-        return sede.getNombre();
     }
     public double getPrecioBase() {
         return precioBase;
     }
+     public String getFechastring() {
+        return fechastring;
+    }
     @Override
     public String toString() {
-        return "{" + fecha + "}"+ "{"+ sede + "}" + "{" +/* Entradas Vendidas*/  "}" +"{" + sede.getCapacidadMaxima() + "}";
+        return "{" + fecha + "}"+ "{"+ sede + "}" + "{" +/* Entradas Vendidas*/  "}" +"{";
     }
 }
