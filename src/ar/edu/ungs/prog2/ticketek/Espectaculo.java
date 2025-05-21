@@ -10,6 +10,7 @@ public class Espectaculo {
         return listaFunciones;
     }
     public Espectaculo(String nombre2) {
+        this.Nombre=nombre2;
     }
     public String getNombre() {
         return Nombre;
