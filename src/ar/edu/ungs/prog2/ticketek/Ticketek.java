@@ -66,11 +66,6 @@ if (listaUsuarios.containsKey(usuario.getEmail())){
 }
 @Override
 public void registrarEspectaculo(String nombre) {
-  for (Espectaculo espectaculo : Listaespectaculos) {
-    if (espectaculo.getNombre().equals(nombre)) {
-      throw new RuntimeException ("el espectaculo ya esta registrado");
-    }
-  }
 Espectaculo espectaculo = new Espectaculo(nombre); 
 AgregarEspectaculo(nombre,espectaculo);
 }
@@ -85,16 +80,16 @@ for (Espectaculo espectaculo1 : Listaespectaculos) {
 Listaespectaculos.add(espectaculo);
 }
 @Override
-public void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
+public void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase){
 Verificardatosdefuncion1(nombreEspectaculo,sede,precioBase);
 Funcion funcion = new Funcion(nombreEspectaculo, fecha, sede, precioBase);
-verificarfechafuncion(fecha);
+verificarfechafuncion(fecha , sede);
 CargarFuncion(funcion);
   }
-private void verificarfechafuncion(String fecha) {
+private void verificarfechafuncion(String fecha, String sede) {
   for (Espectaculo espectaculo : Listaespectaculos) {
   for (Funcion funcion1 : espectaculo.listaFunciones) {
-    if (funcion1.getFechaString().equals(fecha)) {
+    if (funcion1.getFechastring().equals(fecha) && funcion1.getSede().equals(sede)) {// 
       throw new RuntimeException("Ya existe una funcion en esta fehca");
     }
   }
