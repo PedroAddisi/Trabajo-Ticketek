@@ -6,7 +6,7 @@ public class Estadio extends Sedes{
         Tiposede="Estadio";
     }
     private int capacidadsector=capacidadMaxima;
-    public int getCapacidadsector() {
+    public int getCapacidadsector() {// devuelve capacidad de sector unico
         return capacidadsector;
     }
 }

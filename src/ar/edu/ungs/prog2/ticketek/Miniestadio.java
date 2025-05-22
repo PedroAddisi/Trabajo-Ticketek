@@ -1,17 +1,18 @@
 package ar.edu.ungs.prog2.ticketek;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Miniestadio  extends Sedes{
+    //
     private int asientosPorFila=25;
     private String [] sectores={"Platea VIP", "Platea Común", "Platea Baja", "Platea Alta"};
     private int[] capacidad={50, 100, 150, 200};
     private int[] porcentajeAdicional={70, 40, 50, 0};
     private int cantidadPuestos;
     private double precioConsumicion;
+    //
+    //
     public Miniestadio(String nombre, String direccion, int capacidadMaxima, int asientosPorFila,int cantidadPuestos, double precioConsumicion, String[] sectores, int[] capacidad, int[] porcentajeAdicional,String Tiposede) {
         super(nombre, direccion, capacidadMaxima,Tiposede);
         this.asientosPorFila=asientosPorFila;
@@ -22,49 +23,47 @@ public class Miniestadio  extends Sedes{
         this.precioConsumicion=precioConsumicion;
         this.Tiposede="Miniestadio";
     }
-    public int getAsientosPorFila() {
+    //
+    ///
+    public int getAsientosPorFila() {//Devuelve cantidad de asientos por fila
         return asientosPorFila;
     }
-
-    public String[] getSectores() {
+    @Override
+    public double getConsumición() {//devuelve el precio de la consumision
+        return precioConsumicion;
+    }
+    @Override
+    public String[] getSectores() {//devuelve los sectores
         return sectores;
     }
-
-    public int[] getPorcentajeAdicional() {
+    @Override
+    public int[] getPorcentajeAdicional() {//devuelve el porcentaje de sector
         return porcentajeAdicional;
     }
-    public int[] getCapacidad() {
+    @Override
+    public int[] getCapacidad() {//devuelve la capacidad de los sectores
         return capacidad;
     }
 
-    public int getCantidadPuestos() {
+    public int getCantidadPuestos() {//devuelve cantidad de puestos
         return cantidadPuestos;
     }
 
-    public double getPrecioConsumicion() {
+    public double getPrecioConsumicion() {//devuelve el precio de una consumicion
         return precioConsumicion;
     }
-    private Map<String, List<String>> asientosPorSector = new LinkedHashMap<>();
-    public Map<String, List<String>> getAsientosPorSector() {
-        return asientosPorSector;
-    }
     @Override
-    public void generarAsientos() {
-        for(int s = 0; s < sectores.length; s++) {
-            String sector = sectores[s];
-            int totalAsientos = capacidad[s];
-            int totalFilas = (int) Math.ceil((double) totalAsientos / asientosPorFila);//Calcula cantidad de filas que necesito para arriba 
+    public void generarAsientos() {//genera los asientos para el miniestadio sin rpetir numeros pero respetando la cantidad de asientos por fila
+        int numeroAsiento = 1;
 
-            List<String> asientos = new ArrayList<>();
-            int asientoActual = 1;
+        for (int i = 0; i < sectores.length; i++) {
+            String sector = sectores[i];
+            int cantidad = capacidad[i];
 
-            for (int fila = 0; fila < totalFilas; fila++) {
-                char letraFila = (char) ('A' + fila); // Fila A, B, C...
-                for (int i = 1; i <= asientosPorFila && asientoActual <= totalAsientos; i++) {
-                    String codigo = letraFila + String.valueOf(i);
-                    asientos.add(codigo);
-                    asientoActual++;
-                }
+            List<Integer> asientos = new ArrayList<>();
+
+            for (int j = 0; j < cantidad; j++) {
+                asientos.add(numeroAsiento++);
             }
 
             asientosPorSector.put(sector, asientos);
