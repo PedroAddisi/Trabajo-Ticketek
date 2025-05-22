@@ -35,6 +35,6 @@ public class Funcion {
     }
     @Override
     public String toString() {
-        return "{" + fecha + "}"+ "{"+ sede + "}" + "{" +/* Entradas Vendidas*/  "}" +"{";
+        return null;
     }
 }

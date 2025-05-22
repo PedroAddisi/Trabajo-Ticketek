@@ -5,7 +5,6 @@ public class Usuario {
     private String Email;
     private String Contraseña;
     private String Apellido;
-   // private List <Entrada> Entradas;//Cambiarlo por lo de abajo..
     private HashMap <Integer, IEntrada> entradas = new HashMap<>();
     public HashMap<Integer, IEntrada> getEntradas() {
         return entradas;
