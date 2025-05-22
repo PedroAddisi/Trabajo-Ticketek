@@ -3,14 +3,14 @@ public abstract class Sedes {
     protected String nombre;
     protected String direccion;
     protected int capacidadMaxima; 
-    protected String sector;
-    //Hacer Arraylist sectores y clase sectores.
-    // crear clase sector para filas 
-    public Sedes(String nombre, String direccion, int capacidadMaxima) {
+    protected String Tiposede;
+    public Sedes(String nombre, String direccion, int capacidadMaxima,String Tiposede) {
         this.nombre = nombre;
-        this.direccion= direccion;
-        this.capacidadMaxima= capacidadMaxima;
+        this.direccion = direccion;
+        this.capacidadMaxima = capacidadMaxima;
+        this.Tiposede = Tiposede;
     }
+
     public String getNombre() {
         return nombre;
     }
@@ -29,6 +29,7 @@ public abstract class Sedes {
     protected int quitarcapacidad(int i){
         this.capacidadMaxima=-i;
         return capacidadMaxima;
-
+    }
+    public void generarAsientos() {
     }
 }

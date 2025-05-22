@@ -1,11 +1,13 @@
 package ar.edu.ungs.prog2.ticketek;
 public class Estadio extends Sedes{
-    public Estadio(String nombre, String direccion, int capacidadMaxima) {
-        super(nombre, direccion, capacidadMaxima);
-        sector="Campo";
+
+    public Estadio(String nombre, String direccion, int capacidadMaxima,String Tiposede) {
+        super(nombre, direccion, capacidadMaxima,Tiposede);
+        Tiposede="Estadio";
     }
-    private String Tiposede ="Estadio";
-    public String getTiposede() {
-        return Tiposede;
+    private int capacidadsector=capacidadMaxima;
+    public int getCapacidadsector() {
+        return capacidadsector;
     }
 }
+
