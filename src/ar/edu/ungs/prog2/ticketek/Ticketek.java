@@ -1,71 +1,71 @@
 package ar.edu.ungs.prog2.ticketek;
 
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Random;
 public class Ticketek implements ITicketek{
+  //Parametros Necesarios
 HashMap <String, Usuario> listaUsuarios = new HashMap<>();
 List <Espectaculo> Listaespectaculos = new ArrayList<>();
 LinkedList<Sedes>Listasede = new LinkedList<>();
+//
+//Regristrar Sede
 @Override
 public void registrarSede(String nombre, String direccion, int capacidadMaxima) {
-if (capacidadMaxima < 0 || nombre.length() < 0 || direccion.length() <0 ) {
-  throw new RuntimeException("Error al colocar los datos de sede nombre direccion o entrada");
+if (capacidadMaxima < 0 || nombre.isEmpty() || direccion.isEmpty() ) {
+  throw new RuntimeException("Error al colocar los datos de sede nombre direccion o entrada al registrar sede");
 }
-Sedes sede = new Estadio(nombre,direccion,capacidadMaxima);
+Sedes sede = new Estadio(nombre,direccion,capacidadMaxima,"Estadio");
 Agregarsede(sede);
 }
 @Override
 public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila, String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
-if (capacidadMaxima < 0 || nombre.length() < 0 || direccion.length() <0 ) {
-    throw new RuntimeException("Error al colocar los datos de sede nombre direccion o entrada");
-
+if (capacidadMaxima < 0 || nombre.isEmpty() || direccion.isEmpty()) {
+    throw new RuntimeException("Error al colocar los datos de sede nombre direccion o entrada al registrar sede");
 }
-Sedes sede = new Teatro(nombre,direccion,capacidadMaxima, asientosPorFila, sectores, capacidad, porcentajeAdicional);
+Sedes sede = new Teatro(nombre,direccion,capacidadMaxima, asientosPorFila, sectores, capacidad, porcentajeAdicional,"Teatro");
 Agregarsede(sede);
+sede.generarAsientos();
 }
 @Override
 public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila,int cantidadPuestos, double precioConsumicion, String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
-if (capacidadMaxima < 0 || nombre.length() < 0 || direccion.length() <0 ) {//falta tema asientos y filas
-  throw new RuntimeException("Error al colocar los datos de sede nombre direccion o entrada");
-
+if (capacidadMaxima < 0 || nombre.isEmpty() || direccion.isEmpty()) {
+  throw new RuntimeException("Error al colocar los datos de sede nombre direccion o entrada al registrar sede");
 }
-Sedes sede = new Miniestadio(nombre,direccion,capacidadMaxima, asientosPorFila, cantidadPuestos, precioConsumicion, sectores, capacidad, porcentajeAdicional);
+Sedes sede = new Miniestadio(nombre,direccion,capacidadMaxima, asientosPorFila, cantidadPuestos, precioConsumicion, sectores, capacidad, porcentajeAdicional,"Miniestadio");
 Agregarsede(sede);
+sede.generarAsientos();
 }
 private void Agregarsede(Sedes sede1) {
 for (Sedes sede2 : Listasede) {
   if (sede2.getNombre().equals(sede1.getNombre())) {
   throw new RuntimeException("Sede ya  registrada");
-  }
-  else{ 
-
-  }  
+  } 
 }
 Listasede.add(sede1);
 }
+//
+//Registrar Usuario
 @Override
 public void registrarUsuario(String email, String nombre, String apellido, String contrasenia) {
-if (contrasenia.length() < 0 || nombre.length() < 0 || apellido.length() <0  || email.length()<0 ) {
-  throw new RuntimeException("Error al colocar los datos de usuario email, nombre, apellido o contrasenia");
+if (contrasenia.isEmpty()|| nombre.isEmpty() || apellido.isEmpty() || email.isEmpty()) {
+  throw new RuntimeException("Error al colocar los datos de usuario email, nombre, apellido o contrasenia al registrar usuario");
 }
 Usuario nuevousuario = new Usuario(email, nombre, apellido, contrasenia);
 AgregarUsuario(email,nuevousuario);
 }
 private void AgregarUsuario(String email, Usuario usuario) {
 if (listaUsuarios.containsKey(usuario.getEmail())){
-  throw new RuntimeException(" Emial Ya registrado");
+  throw new RuntimeException("Emial Ya registrado");
 }
-  listaUsuarios.put(email, usuario);
+listaUsuarios.put(email, usuario);
 }
 @Override
+//
+//Registrar Espectaculo
 public void registrarEspectaculo(String nombre) {
 Espectaculo espectaculo = new Espectaculo(nombre); 
 AgregarEspectaculo(nombre,espectaculo);
@@ -73,38 +73,46 @@ AgregarEspectaculo(nombre,espectaculo);
 private void AgregarEspectaculo(String nombre,Espectaculo espectaculo) {
 for (Espectaculo espectaculo1 : Listaespectaculos) {
   if (espectaculo1.getNombre() == espectaculo.getNombre()) {
-    throw new RuntimeException("Espectaculo ya registrada"); 
-  } 
-  else{
+    throw new RuntimeException("Espectaculo ya registrado"); 
   }  
 }
 Listaespectaculos.add(espectaculo);
 }
 @Override
+//
+//Agregar Funcion
 public void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase){
 Verificardatosdefuncion1(nombreEspectaculo,sede,precioBase);
 Funcion funcion = new Funcion(nombreEspectaculo, fecha, sede, precioBase);
-verificarfechafuncion(fecha , sede);
+verificarfechafuncion(nombreEspectaculo ,fecha , sede, funcion);
+AgregarSedeAfuncion(funcion , sede);
 CargarFuncion(funcion);
   }
-private void verificarfechafuncion(String fecha, String sede) {
-  for (Espectaculo espectaculo : Listaespectaculos) {
+private void AgregarSedeAfuncion(Funcion funcion,String sede) {
+  for (Sedes sede1 :Listasede) {
+    if (sede1.nombre.equals(sede)) {
+      funcion.getMapasede().put(sede, sede1);
+    }
+    }
+  }
+private void verificarfechafuncion(String nombreEspectaculo,String fecha, String sede, Funcion funcion) {
+   for (Espectaculo espectaculo : Listaespectaculos) {
   for (Funcion funcion1 : espectaculo.listaFunciones) {
     if (funcion1.getFechastring().equals(fecha) && funcion1.getSede().equals(sede)) {// 
-      throw new RuntimeException("Ya existe una funcion en esta fehca");
+      throw new RuntimeException("Ya existe una funcion en esta fecha");
     }
   }
 }
 }
 private void Verificardatosdefuncion1(String nombreespectaculo,String sede, double precioBase) {
-  if(nombreespectaculo.length()<0){
-    throw new RuntimeException ("Error al colocar datos");
+  if(nombreespectaculo.isEmpty()){
+    throw new RuntimeException ("Error al colocar datos de nombre ");
     }
-    if (sede.length()<0) {
-      throw new RuntimeException ("Error al colocar datos");
+    if (sede.isEmpty()) {
+      throw new RuntimeException ("Error al colocar datos de sede");
     }
-  if (precioBase< 0) {
-    throw new RuntimeException ("Error al colocar datos");
+  if (precioBase < 0) {
+    throw new RuntimeException ("Error al colocar datos de precio");
   }
 }
 private void CargarFuncion(Funcion funcion) {
@@ -112,19 +120,30 @@ for (Espectaculo espectaculo : Listaespectaculos) {
   if (espectaculo.getNombre().equals(funcion.getNombreEspectaculo())) {
     espectaculo.cargarfunciones(funcion); 
   }
-  else{
-  }
 }
 }
+//
+//Vender Entradas
 @Override
 public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia,int cantidadEntradas) {
-  if (nombreEspectaculo.length()<0 || email.length()<0 || cantidadEntradas <0) {// si la sede de funcion esta numerada
+  if (nombreEspectaculo.isEmpty() || email.isEmpty() || cantidadEntradas < 0) {
     throw new RuntimeException("error con algunos de los datos de espectaculo,usaurio o la funcion no trasncurre en un estadio ");
   }
   List <IEntrada> entradascompradas= new ArrayList<>(cantidadEntradas);
   AgregarentradaCampo(email,contrasenia,cantidadEntradas,nombreEspectaculo,fecha,entradascompradas);
+  DescontarcantdeentradasCampo(nombreEspectaculo,fecha,cantidadEntradas);
     return entradascompradas; 
   }
+  private void DescontarcantdeentradasCampo(String nombreEspectaculo, String fecha, int cantidadEntradas) {
+    for (Espectaculo espectaculo : Listaespectaculos) {
+      for (Funcion funcion : espectaculo.listaFunciones) {
+        for (int i = 0; i <cantidadEntradas; i++) {
+          funcion.getMapasede().get(funcion.getSede()).capacidadMaxima =- 1;
+          funcion.guardarrecaudado(cantidadEntradas,funcion.getSede()); 
+        } 
+      }
+    }
+}
   private double obtenerpreciodeentrada(String nombreEspectaculo, LocalDate fecha) {
     for (Espectaculo espectaculo : Listaespectaculos) {
     if (espectaculo.getNombre().equals(nombreEspectaculo)) {
@@ -138,14 +157,12 @@ public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, Stri
   throw new RuntimeException("Función no encontrada para ese espectáculo en esa fecha.");
   }
   private void AgregarentradaCampo(String email,String contrasenia, int cantidadEntradas, String nombreEspectaculo, String fecha, List<IEntrada> entradascompradas) {
-  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
-  LocalDate fechadate= LocalDate.parse(fecha, formatter);
+    LocalDate fechadate= obtenerfecha(fecha);
   double precio = obtenerpreciodeentrada(nombreEspectaculo,fechadate);
     if (listaUsuarios.get(email).getContraseña().equals(contrasenia)) {
     for (int i = 0; i < cantidadEntradas; i++) {
       Entrada entrada= new Entrada(nombreEspectaculo , fechadate , email,"Campo", precio);
       entradascompradas.add(entrada);
-      listaUsuarios.get(email).agregarentrada(entrada);
     }
   }
   else{
@@ -159,17 +176,28 @@ public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, Stri
   }
   List <IEntrada> entradascompradas= new ArrayList<>();
   Agregarentradateatro(nombreEspectaculo,fecha,email,contrasenia,sector,asientos,entradascompradas);
+  ReservaryCalcularcosto(nombreEspectaculo,fecha,email,contrasenia,sector,asientos);
   return entradascompradas;
 }
+  private void ReservaryCalcularcosto(String nombreEspectaculo, String fecha, String email, String contrasenia,String sector, int[] asientos) {
+    LocalDate fechaDate=obtenerfecha(fecha);
+     for (Espectaculo espectaculo : Listaespectaculos) {
+    if (espectaculo.getNombre().equals(nombreEspectaculo)) {
+      for (Funcion funcion : espectaculo.listaFunciones) {
+        if (funcion.getFecha().equals(fechaDate)) {
+          funcion.reservarasientos(asientos);
+        }
+      }
+    }
+  }
+  }
   private void Agregarentradateatro(String nombreEspectaculo, String fecha, String email, String contrasenia,String sector, int[] asientos, List<IEntrada> entradascompradas) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
-  LocalDate fechadate= LocalDate.parse(fecha, formatter);
+    LocalDate fechadate= obtenerfecha(fecha);
     if (listaUsuarios.get(email).getContraseña().equals(contrasenia)) {
       for (int i = 0; i < asientos.length; i++) {
         Entrada entrada = new Entrada(nombreEspectaculo,fechadate, email, sector,0);
         listaUsuarios.get(email).agregarentrada(entrada);
         entradascompradas.add(entrada);
-        //Falte el reservar sector.
       } 
     }
     else{
@@ -177,6 +205,8 @@ public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, Stri
     }
   }
   @Override
+  //
+  //Listar Funciones
 public String listarFunciones(String nombreEspectaculo) {
   for (Espectaculo espectaculo : Listaespectaculos) {
     if (espectaculo.getNombre() == nombreEspectaculo) {
@@ -195,61 +225,88 @@ public String listarFunciones(String nombreEspectaculo) {
 }
 return "Funciones de" + nombreEspectaculo;
 }
+//
+//Listar Entradas Espectaculo
   @Override
   public List<IEntrada> listarEntradasEspectaculo(String nombreEspectaculo) {
     return null;
 }
+//
+//Listar Entradas Futuras
   @Override
   public List<IEntrada> listarEntradasFuturas(String email, String contrasenia) {
     return null;
-
   }
+  //
+  //Listar Entradas Usuario
   @Override
   public List<IEntrada> listarTodasLasEntradasDelUsuario(String email, String contrasenia) {
     return null;
   }
+  //
+  //Anular Entrada
   @Override
   public boolean anularEntrada(IEntrada entrada, String contrasenia) {
-    if (entrada == null || contrasenia == null || !listaUsuarios.containsKey(entrada.getEmail())) {
-        throw new RuntimeException("Datos inválidos");
-    }
-    Usuario usuario = listaUsuarios.get(entrada.getEmail());
-    if (!usuario.getContraseña().equals(contrasenia)) {
-        throw new RuntimeException("Contraseña incorrecta");
-    }
-
-    if (entrada.getFecha().isBefore(LocalDate.now())) {
-        return false; // la entrada ya expiró
-    }
-    
+    return false;
   }
+  //
+  //Cambiar Entrada
   @Override
   public IEntrada cambiarEntrada(IEntrada entrada, String contrasenia, String fecha, String sector, int asiento) {
     return entrada;
-    // TODO Auto-generated method stub
   }
   @Override
   public IEntrada cambiarEntrada(IEntrada entrada, String contrasenia, String fecha) {
     return entrada;
-    // TODO Auto-generated method stub
+  }//
+  //Costo Entrada
+  @Override
+  public double costoEntrada(String nombreEspectaculo, String fecha) {//En O(1)
+    LocalDate fechDate= obtenerfecha(fecha);
+    return obtenerpreciodeentrada(nombreEspectaculo,fechDate);
   }
   @Override
-  public double costoEntrada(String nombreEspectaculo, String fecha) {
-    return 0;
+  public double costoEntrada(String nombreEspectaculo, String fecha, String sector) {//En O(1)
+    LocalDate fechaDate=obtenerfecha(fecha);
+    double porcentajeAdicional=obtenerpreciodeentrada(nombreEspectaculo, fechaDate)*obtenerpreciosector(sector);
+    return obtenerpreciodeentrada(nombreEspectaculo, fechaDate)+porcentajeAdicional;
   }
-  @Override
-  public double costoEntrada(String nombreEspectaculo, String fecha, String sector) {
-    return 0;
-    // TODO Auto-generated method stub
-  }
+  //
+  //Total Recaudado
   @Override
   public double totalRecaudado(String nombreEspectaculo) {
     return 0;
-    // TODO Auto-generated method stub
   }
+  //
+  //Total recaudado por sede
   @Override
   public double totalRecaudadoPorSede(String nombreEspectaculo, String nombreSede) {
     return 0;
-    // TODO Auto-generated method stub);
+    }
+  //
+  private LocalDate obtenerfecha(String fecha){
+     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+  LocalDate fechadate= LocalDate.parse(fecha, formatter);
+  return fechadate;
+  }
+  private double obtenerpreciosector(String sector) {
+  String normalizado = sector.toLowerCase().replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u");
+
+  switch (normalizado) {
+      case "platea vip":
+      case "vip":
+          return 0.70;
+      case "platea comun":
+      case "comun":
+          return 0.40;
+      case "platea baja":
+      case "baja":
+          return 0.50;
+      case "platea alta":
+      case "alta":
+           return 0.0;
+      default:
+          throw new RuntimeException("Sector inválido");
+    }
   }
 }

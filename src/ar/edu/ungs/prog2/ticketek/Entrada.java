@@ -8,7 +8,7 @@ public class Entrada implements IEntrada {
     private String email;
     private String contrasenia;
     private int  cantidadEntradas;
-    private int codigodeentrada=Codigorandom();
+    private Integer codigodeentrada=Codigorandom();
     private String Sectorentrada;
     private double precio;
 public Entrada(String nombreEspectaculo, LocalDate fecha, String email,String sectorentrada, double precio) {
