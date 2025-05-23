@@ -15,6 +15,9 @@ public class Miniestadio extends Sedes {
     // Constructor
     public Miniestadio(String nombre, String direccion, int capacidadMaxima, int asientosPorFila, int cantidadPuestos, double precioConsumicion, String[] sectores, int[] capacidad, int[] porcentajeAdicional, String tipoSede) {
         super(nombre, direccion, capacidadMaxima, "Miniestadio");
+        if (asientosPorFila <= 0) throw new IllegalArgumentException("Asientos por fila inválido");
+        if (cantidadPuestos < 0) throw new IllegalArgumentException("Cantidad de puestos inválida");
+        if (precioConsumicion < 0) throw new IllegalArgumentException("Precio de consumición inválido");
         this.asientosPorFila = asientosPorFila;
         this.sectores = sectores;
         this.capacidad = capacidad;
@@ -39,13 +42,13 @@ public class Miniestadio extends Sedes {
     }
 
     @Override
-    public int[] getPorcentajeAdicional() {
-        return porcentajeAdicional;
+    public int[] getCapacidad() {
+        return capacidad;
     }
 
     @Override
-    public int[] getCapacidad() {
-        return capacidad;
+    public int[] getPorcentajeAdicional() {
+        return porcentajeAdicional;
     }
 
     // Devuelve cantidad de puestos

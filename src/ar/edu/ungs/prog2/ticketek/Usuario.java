@@ -14,6 +14,10 @@ public class Usuario {
     private HashMap<Integer, IEntrada> entradas = new HashMap<>();
     // Constructor
     public Usuario(String email, String nombre, String apellido, String contrasenia) {
+        if (email == null || email.isEmpty()) throw new IllegalArgumentException("Email inválido");
+        if (nombre == null || nombre.isEmpty()) throw new IllegalArgumentException("Nombre inválido");
+        if (apellido == null || apellido.isEmpty()) throw new IllegalArgumentException("Apellido inválido");
+        if (contrasenia == null || contrasenia.isEmpty()) throw new IllegalArgumentException("Contraseña inválida");
         this.email = email;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -60,13 +64,7 @@ public class Usuario {
         return entradasFuturas;
     }
     public List<IEntrada> Recorrerentradasusuario() {// Devuelve todas las entradas del usuario
-         List<IEntrada> entradasTotales = new ArrayList<>();
-        for (IEntrada entrada : entradas.values()) {
-            if (entrada instanceof Entrada) {
-                    entradasTotales.add(entrada);
-                }
-            }
-             return entradasTotales;
+         return new ArrayList<>(entradas.values());
     }
 }
 
