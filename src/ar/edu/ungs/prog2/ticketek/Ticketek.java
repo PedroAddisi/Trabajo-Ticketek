@@ -303,7 +303,7 @@ public class Ticketek implements ITicketek {
         if (entrada instanceof Entrada) {// Verifica si la entrada es una instancia de Entrada
             Entrada e = (Entrada) entrada;// Convierte la entrada a tipo Entrada para poder acceder a sus métodos
             Funcion funcion = listaEspectaculos.get(e.getNombreEspectaculo()).getListaFunciones().get(e.getFechaString());// Obtiene la función por medio de los parametros dados
-            Entrada entradanueva=new Entrada(e.getNombreEspectaculo(),fechadate,e.getEmail(),funcion.getSede(),"Campo",e.precio(),null);// Crea una nueva entrada con la nueva fecha y los datos de la entrada a cambiar
+            Entrada entradanueva=new Entrada(e.getNombreEspectaculo(),fechadate,e.getEmail(),funcion.getSede(),funcion.getMapSede().get(funcion.getSede()).getTipoSede(),e.precio(),null);// Crea una nueva entrada con la nueva fecha y los datos de la entrada a cambiar
             Usuario usuario = listaUsuarios.get(e.getEmail());
             if (usuario.getContrasenia().equals(contrasenia)) {
                 if (e.getFecha().isBefore(hoy)) {
@@ -312,6 +312,7 @@ public class Ticketek implements ITicketek {
                 if (!usuario.getEntradas().containsKey(e.getCodigoDeEntrada())) {
                     throw new RuntimeException("Entrada no encontrada");
                 }
+                funcion.reservarAsientos(e.getAsientos(), sector);
                 funcion.liberarAsientos(e.getAsientos(), e.getSectorEntrada());// Libera los asientos de la entrada anterior
                 return entradanueva;
             }
