@@ -17,6 +17,12 @@ public class Entrada implements IEntrada {
     private String nombreSede;
     // Constructor
     public Entrada(String nombreEspectaculo, LocalDate fecha, String email, String nombreSede, String sectorEntrada, double precio, int[] asientos) {
+        if (nombreEspectaculo == null || nombreEspectaculo.isEmpty()) throw new IllegalArgumentException("Nombre de espectáculo inválido");
+        if (fecha == null) throw new IllegalArgumentException("Fecha inválida");
+        if (email == null || email.isEmpty()) throw new IllegalArgumentException("Email inválido");
+        if (nombreSede == null || nombreSede.isEmpty()) throw new IllegalArgumentException("Nombre de sede inválido");
+        if (sectorEntrada == null || sectorEntrada.isEmpty()) throw new IllegalArgumentException("Sector inválido");
+        if (precio < 0) throw new IllegalArgumentException("Precio inválido");
         this.nombreEspectaculo = nombreEspectaculo;
         this.fecha = fecha;
         this.email = email;

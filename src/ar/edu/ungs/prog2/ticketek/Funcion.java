@@ -23,6 +23,10 @@ public class Funcion {
 
     // Constructor
     public Funcion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
+        if (nombreEspectaculo == null || nombreEspectaculo.isEmpty()) throw new IllegalArgumentException("Nombre de espectáculo inválido");
+        if (fecha == null || fecha.isEmpty()) throw new IllegalArgumentException("Fecha inválida");
+        if (sede == null || sede.isEmpty()) throw new IllegalArgumentException("Sede inválida");
+        if (precioBase < 0) throw new IllegalArgumentException("Precio base inválido");
         this.nombreEspectaculo = nombreEspectaculo;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
         LocalDate fecha1 = LocalDate.parse(fecha, formatter);
