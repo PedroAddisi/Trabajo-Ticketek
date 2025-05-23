@@ -15,18 +15,12 @@ public class Ticketek implements ITicketek {
     // --- Métodos para registrar sedes ---
     @Override
     public void registrarSede(String nombre, String direccion, int capacidadMaxima) {
-        if (capacidadMaxima < 0 || nombre.isEmpty() || direccion.isEmpty()) {
-            throw new RuntimeException("Error al registrar sede: datos inválidos.");
-        }
         Sedes sede = new Estadio(nombre, direccion, capacidadMaxima, "Estadio");
         agregarSede(nombre, sede);
     }
 
     @Override
     public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila, String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
-        if (capacidadMaxima < 0 || nombre.isEmpty() || direccion.isEmpty()) {
-            throw new RuntimeException("Error al registrar sede: datos inválidos.");
-        }
         Sedes sede = new Teatro(nombre, direccion, capacidadMaxima, asientosPorFila, sectores, capacidad, porcentajeAdicional, "Teatro");
         agregarSede(nombre, sede);
         sede.generarAsientos();
@@ -34,9 +28,6 @@ public class Ticketek implements ITicketek {
 
     @Override
     public void registrarSede(String nombre, String direccion, int capacidadMaxima, int asientosPorFila, int cantidadPuestos, double precioConsumicion, String[] sectores, int[] capacidad, int[] porcentajeAdicional) {
-        if (capacidadMaxima < 0 || nombre.isEmpty() || direccion.isEmpty()) {
-            throw new RuntimeException("Error al registrar sede: datos inválidos.");
-        }
         Sedes sede = new Miniestadio(nombre, direccion, capacidadMaxima, asientosPorFila, cantidadPuestos, precioConsumicion, sectores, capacidad, porcentajeAdicional, "Miniestadio");
         agregarSede(nombre, sede);
         sede.generarAsientos();
@@ -52,9 +43,6 @@ public class Ticketek implements ITicketek {
     // --- Métodos para registrar usuarios ---
     @Override
     public void registrarUsuario(String email, String nombre, String apellido, String contrasenia) {
-        if (contrasenia.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || email.isEmpty()) {
-            throw new RuntimeException("Error al registrar usuario: datos inválidos.");
-        }
         Usuario nuevoUsuario = new Usuario(email, nombre, apellido, contrasenia);
         agregarUsuario(email, nuevoUsuario);
     }
@@ -84,7 +72,6 @@ public class Ticketek implements ITicketek {
 
     @Override
     public void agregarFuncion(String nombreEspectaculo, String fecha, String sede, double precioBase) {
-        verificarDatosDeFuncion(nombreEspectaculo, sede, precioBase);
         Funcion funcion = new Funcion(nombreEspectaculo, fecha, sede, precioBase);
         verificarFechaFuncion(nombreEspectaculo, fecha, sede, funcion);
         agregarSedeAFuncion(funcion, sede);
@@ -112,19 +99,6 @@ public class Ticketek implements ITicketek {
             }
         }
     }
-
-    private void verificarDatosDeFuncion(String nombreEspectaculo, String sede, double precioBase) {
-        if (nombreEspectaculo.isEmpty()) {
-            throw new RuntimeException("Error al colocar datos de nombre");
-        }
-        if (sede.isEmpty()) {
-            throw new RuntimeException("Error al colocar datos de sede");
-        }
-        if (precioBase < 0) {
-            throw new RuntimeException("Error al colocar datos de precio");
-        }
-    }
-
     private void cargarFuncion(String fecha,Funcion funcion) {
         for (Espectaculo espectaculo : listaEspectaculos.values()) {
             if (espectaculo.getNombre().equals(funcion.getNombreEspectaculo())) {
@@ -137,9 +111,6 @@ public class Ticketek implements ITicketek {
     // Vender Entradas
     @Override
     public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, int cantidadEntradas) {
-        if (nombreEspectaculo.isEmpty() || email.isEmpty() || cantidadEntradas < 0) {
-            throw new RuntimeException("error con algunos de los datos de espectaculo,usaurio o la funcion no trasncurre en un estadio ");
-        }
         List<IEntrada> entradasCompradas = new ArrayList<>(cantidadEntradas);
         agregarEntradaCampo(email, contrasenia, cantidadEntradas, nombreEspectaculo, fecha, entradasCompradas);
         descontarCantDeEntradasCampo(nombreEspectaculo, fecha, cantidadEntradas);
@@ -180,9 +151,6 @@ public class Ticketek implements ITicketek {
 
     @Override
     public List<IEntrada> venderEntrada(String nombreEspectaculo, String fecha, String email, String contrasenia, String sector, int[] asientos) {
-        if (nombreEspectaculo.isEmpty() || email.isEmpty() || asientos == null || fecha.isEmpty() || sector.isEmpty()) {
-            throw new RuntimeException("error con algunos de los datos de espectaculo,usaurio o la funcion no trasncurre en un estadio ");
-        }
         List<IEntrada> entradasCompradas = new ArrayList<>();
         agregarEntradaTeatro(nombreEspectaculo, fecha, email, contrasenia, sector, asientos, entradasCompradas);
         reservar(nombreEspectaculo, fecha, email, contrasenia, sector, asientos);

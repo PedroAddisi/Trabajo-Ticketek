@@ -3,11 +3,12 @@ import java.util.HashMap;
 
 public class Espectaculo {
     // Atributos
-    private String nombre;
-    private HashMap<String,Funcion> listaFunciones = new HashMap<>();
+    private final String nombre;
+    private final HashMap<String, Funcion> listaFunciones = new HashMap<>();
 
     // Constructor
     public Espectaculo(String nombre) {
+        if (nombre == null || nombre.isEmpty()) throw new IllegalArgumentException("Nombre inválido");
         this.nombre = nombre;
     }
 
@@ -18,12 +19,14 @@ public class Espectaculo {
 
     // Devuelve la lista de funciones del espectáculo
     public HashMap<String, Funcion> getListaFunciones() {
-        return listaFunciones;
+        return new HashMap<>(listaFunciones); 
     }
 
     // Carga una función a la lista de funciones del espectáculo
-    public void cargarFunciones(String fecha,Funcion funcion) {
-        listaFunciones.put(fecha,funcion);
+    public void cargarFunciones(String fecha, Funcion funcion) {
+        if (fecha == null || fecha.isEmpty()) throw new IllegalArgumentException("Fecha inválida");
+        if (funcion == null) throw new IllegalArgumentException("Función inválida");
+        listaFunciones.put(fecha, funcion);
     }
 
     @Override

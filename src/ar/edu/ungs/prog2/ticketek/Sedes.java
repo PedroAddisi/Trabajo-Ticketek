@@ -19,6 +19,10 @@ public abstract class Sedes {
 
     // Constructor
     public Sedes(String nombre, String direccion, int capacidadMaxima, String tipoSede) {
+        if (nombre == null || nombre.isEmpty()) throw new IllegalArgumentException("Nombre de sede inválido");
+        if (direccion == null || direccion.isEmpty()) throw new IllegalArgumentException("Dirección inválida");
+        if (capacidadMaxima <= 0) throw new IllegalArgumentException("Capacidad máxima inválida");
+        if (tipoSede == null || tipoSede.isEmpty()) throw new IllegalArgumentException("Tipo de sede inválido");
         this.nombre = nombre;
         this.direccion = direccion;
         this.capacidadMaxima = capacidadMaxima;
