@@ -17,7 +17,7 @@ public class Teatro extends Sedes {
         this.sectores=sectores;
         this.capacidad=capacidad;
         this.porcentajeAdicional=porcentajeAdicional;
-        this.Tiposede="Teatro";
+        this.tipoSede="Teatro";
     }   
     //
     //

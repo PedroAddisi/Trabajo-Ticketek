@@ -5,63 +5,78 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Sedes {
-    //
+    // Atributos
     protected int asientosPorFila;
-    protected String [] sectores;
+    protected String[] sectores;
     protected int[] capacidad;
-   protected int[] porcentajeAdicional;
-    protected double consumición;
+    protected int[] porcentajeAdicional;
+    protected double consumicion;
     protected String nombre;
     protected String direccion;
-    protected int capacidadMaxima; 
-    protected String Tiposede;
-    //
-    //
-    public Sedes(String nombre, String direccion, int capacidadMaxima,String Tiposede) {
+    protected int capacidadMaxima;
+    protected String tipoSede;
+    protected Map<String, List<Integer>> asientosPorSector = new LinkedHashMap<>();
+
+    // Constructor
+    public Sedes(String nombre, String direccion, int capacidadMaxima, String tipoSede) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.capacidadMaxima = capacidadMaxima;
-        this.Tiposede = Tiposede;
+        this.tipoSede = tipoSede;
     }
-    //
-    //
-    public String getNombre() {//devuelve el nombre de la sede
+
+    // Devuelve el nombre de la sede
+    public String getNombre() {
         return nombre;
     }
 
-    public String getDireccion() {//devuelve la direccion de la sede
+    // Devuelve la dirección de la sede
+    public String getDireccion() {
         return direccion;
     }
 
-    public int getCapacidadMaxima() {//devuelve la capacidad max de la sede
+    // Devuelve la capacidad máxima de la sede
+    public int getCapacidadMaxima() {
         return capacidadMaxima;
     }
-    
-    public double getConsumición() {//devuelve el costo de la consumicion
-        return consumición;
+
+    // Devuelve el costo de la consumición
+    public double getConsumición() {
+        return consumicion;
     }
 
-    public int Consultarvarlorentrada(int precioBase, String Platea){//consulta el valor de la entrada 
+    // Consulta el valor de la entrada
+    public int consultarValorEntrada(int precioBase, String platea) {
         return precioBase;
-        
     }
-     public String[] getSectores() {//devuelve los sectores de la sede
+
+    // Devuelve los sectores de la sede
+    public String[] getSectores() {
         return sectores;
     }
 
-    public int[] getCapacidad() {//devuelve la capacidad de la sede
+    // Devuelve la capacidad de la sede
+    public int[] getCapacidad() {
         return capacidad;
     }
 
-    public int[] getPorcentajeAdicional() {//devuelve el porcentaje adicional de la sede
+    // Devuelve el porcentaje adicional de la sede
+    public int[] getPorcentajeAdicional() {
         return porcentajeAdicional;
     }
-    protected Map<String, List<Integer>> asientosPorSector = new LinkedHashMap<>();//donde se guardan  lo asientos por sector
-    public Map<String, List<Integer>> getAsientosPorSector() {//retorna los asientos por sector
+
+    // Retorna los asientos por sector
+    public Map<String, List<Integer>> getAsientosPorSector() {
         return asientosPorSector;
     }
 
-    public void generarAsientos() {   //genera todos los asientos por sector
+    // Devuelve el tipo de sede
+    public String getTipoSede() {
+        return tipoSede;
+    }
 
+    // Genera todos los asientos por sector (debe ser implementado por subclases si es necesario)
+    public void generarAsientos() {
+        // Implementación vacía por defecto ya que modifico el comportamiento en la subclase
     }
 }

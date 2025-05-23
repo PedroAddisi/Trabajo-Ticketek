@@ -1,29 +1,33 @@
 package ar.edu.ungs.prog2.ticketek;
+import java.util.HashMap;
 
-import java.util.ArrayList;
-import java.util.List;
 public class Espectaculo {
-    //
-    private String Nombre;
-    public List<Funcion> listaFunciones = new ArrayList<>();
-    //
-    public Espectaculo(String nombre2) {
-        this.Nombre=nombre2;
+    // Atributos
+    private String nombre;
+    private HashMap<String,Funcion> listaFunciones = new HashMap<>();
+
+    // Constructor
+    public Espectaculo(String nombre) {
+        this.nombre = nombre;
     }
-    //
-    //
-    public String getNombre() {//Devuelve el nombre del espectaculo
-        return Nombre;
+
+    // Devuelve el nombre del espectáculo
+    public String getNombre() {
+        return nombre;
     }
-    public List<Funcion> getListaFunciones() {// devuelve la lista de funciones del espectaculo
+
+    // Devuelve la lista de funciones del espectáculo
+    public HashMap<String, Funcion> getListaFunciones() {
         return listaFunciones;
     }
-    public void cargarfunciones(Funcion funcion){// carga una funcion a la lista de espectaculos
-        listaFunciones.add(funcion);
-}
+
+    // Carga una función a la lista de funciones del espectáculo
+    public void cargarFunciones(String fecha,Funcion funcion) {
+        listaFunciones.put(fecha,funcion);
+    }
+
     @Override
     public String toString() {
-        return "hola";
-    } 
-    // 
+        return "Espectaculo: " + nombre + ", Funciones: " + listaFunciones.size();
+    }
 }
