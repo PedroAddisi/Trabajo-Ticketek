@@ -1,18 +1,19 @@
-## Getting Started
+##  Description
+This is a university project that simulates a ticket-selling application developed using an object-oriented programming approach.  
+The project meets all the tests established by the institution.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+##  Project Structure
+- src/        Contains the Java source code
+- bin/        Compiled output files
+- lib/        External dependencies
+- .vscode/    IDE configuration files
 
-## Folder Structure
+##  Core Classes
+- Ticketek.java: Contains the main functionality of the application.
+- Entrada.java: Represents a ticket and contains the logic to calculate its cost depending on the zone and venue.
+- Sede.java: Abstract base class that defines common attributes and behavior shared by all venue types.
 
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+##  Key Concepts
+- Object-Oriented Programming
+- Inheritance and abstraction
+- Domain modeling
