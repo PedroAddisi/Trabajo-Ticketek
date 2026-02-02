@@ -17,3 +17,5 @@ The project meets all the tests established by the institution.
 - Object-Oriented Programming
 - Inheritance and abstraction
 - Domain modeling
+##Important
+In this test file, some test fail because the proyect was done in 2025.However, if you change the date on your computer or update the concert date, the test pass successfully
